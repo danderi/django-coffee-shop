@@ -1,13 +1,13 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from .models import Product
 from django.views import generic
 from .forms import ProductForm
 
 # Create your views here.
-def list_products(request):
-    products = Product.objects.all() 
-    return render(request, 'products/list.html', {'products': products})
+class ProductListView(generic.ListView):
+    model = Product
+    template_name = 'products/list_product.html'
+    context_object_name = 'products'
 
 class ProductFormView(generic.FormView):
     template_name = "products/add_product.html"
