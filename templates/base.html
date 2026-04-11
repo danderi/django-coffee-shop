@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Coffee Shop{% endblock %}</title>
-    <!-- Tailwind CSS vía CDN para empezar rápido -->
+    <!-- Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-stone-100 text-stone-900 flex flex-col min-h-screen">
@@ -12,19 +12,42 @@
     <!-- NAVBAR / MENU -->
     <nav class="bg-amber-900 text-white p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold">☕ Coffee Shop</a>
-            <ul class="flex gap-6">
-                <li><a href="#" class="hover:text-amber-200">Inicio</a></li>
-                <li><a href="#" class="hover:text-amber-200">Productos</a></li>
-                <li><a href="#" class="hover:text-amber-200">Mi Orden</a></li>
-            </ul>
+            <!-- Logo -->
+            <a href="{% url 'list_products' %}" class="text-2xl font-bold">☕ Coffee Shop</a>
+            
+            <!-- Links y Autenticación -->
+            <div class="flex items-center gap-8">
+                <ul class="flex gap-6 items-center">
+                    <li><a href="#" class="hover:text-amber-200">Inicio</a></li>
+                    <li><a href="{% url 'list_products' %}" class="hover:text-amber-200">Productos</a></li>
+                    <li><a href="#" class="hover:text-amber-200">Mi Orden</a></li>
+                </ul>
+
+                <!-- Sección de Usuario -->
+                <div class="flex items-center gap-4 border-l border-amber-800 pl-8">
+                    {% if user.is_authenticated %}
+                        <span class="text-amber-200 text-sm italic">Hola, {{ user.username }}</span>
+                        <!-- El Logout debe ser un FORM por seguridad en Django 5+ -->
+                        <form action="{% url 'logout' %}" method="post" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-amber-800 hover:bg-red-950 px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                Salir
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="bg-amber-800 hover:bg-amber-950 px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                            Iniciar sesión
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container mx-auto p-8 flex-grow">
         {% block content %}
-        <!-- Aquí es donde las otras páginas inyectarán su código -->
+        <!-- Aquí se inyecta el contenido de cada página -->
         {% endblock %}
     </main>
 
