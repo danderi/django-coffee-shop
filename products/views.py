@@ -3,6 +3,7 @@ from .models import Product
 from django.views import generic
 from .forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 class ProductListView(LoginRequiredMixin, generic.ListView):
@@ -26,3 +27,8 @@ class ProductFormView(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+class RegisterView(generic.CreateView):
+    form_class = UserCreationForm
+    template_name = 'registration/register.html'
+    success_url = reverse_lazy('login') 

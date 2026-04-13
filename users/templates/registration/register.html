@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6 text-stone-800">Crear una cuenta nueva ☕</h1>
+<form method="post" class="max-w-md">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="mt-4 bg-amber-800 text-white px-6 py-2 rounded hover:bg-amber-900 transition">
+        Registrarme
+    </button>
+</form>
+<p class="mt-4 text-sm">
+    ¿Ya tienes cuenta? <a href="{% url 'login' %}" class="text-amber-700 underline">Inicia sesión aquí</a>
+</p>
+{% endblock %}
