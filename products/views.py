@@ -27,8 +27,5 @@ class ProductFormView(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-    
-class RegisterView(generic.CreateView):
-    form_class = UserCreationForm
-    template_name = 'registration/register.html'
-    success_url = reverse_lazy('login') 
+
+

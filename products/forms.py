@@ -19,3 +19,4 @@ class ProductForm(forms.Form):
             stock=self.cleaned_data['stock'],
 
         )
+        
