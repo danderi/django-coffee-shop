@@ -3,6 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import Order
 from .forms import OrderProductForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import OrderSerializer
 
 # Create your views here.
 class MyOrderView(LoginRequiredMixin, DetailView):
@@ -40,3 +44,13 @@ class CreateOrderProductView(LoginRequiredMixin, CreateView):
         form.save()
         return super().form_valid(form)
 
+class OrderCreateAPI(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
+    def post(self, request):
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

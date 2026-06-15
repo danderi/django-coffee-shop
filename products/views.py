@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from rest_framework.views import APIView
 from .serializers import ProductSerializer
 from rest_framework.response import Response
+from rest_framework import status
 
 
 # Create your views here.
@@ -36,10 +37,20 @@ class ProductFormView(LoginRequiredMixin, generic.FormView):
 class ProductListAPI(APIView):
     authentication_classes = []
     permission_classes = []
-    
+
     def get(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
 
+class ProductCreateAPI(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
