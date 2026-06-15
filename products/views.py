@@ -4,6 +4,10 @@ from django.views import generic
 from .forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
+from rest_framework.views import APIView
+from .serializers import ProductSerializer
+from rest_framework.response import Response
+
 
 # Create your views here.
 class ProductListView(LoginRequiredMixin, generic.ListView):
@@ -27,5 +31,15 @@ class ProductFormView(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+
+class ProductListAPI(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
+    def get(self, request):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
 
 
