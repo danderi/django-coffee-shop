@@ -85,7 +85,12 @@ WSGI_APPLICATION = "coffee_shop.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {"default": env.db("DJANGO_DB_URL")}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 # Password validation
