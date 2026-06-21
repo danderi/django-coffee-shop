@@ -7,20 +7,43 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='name')),
-                ('description', models.TextField(max_length=300, verbose_name='description')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='price')),
-                ('available', models.BooleanField(default=True, verbose_name='available')),
-                ('photo', models.ImageField(blank=True, null=True, upload_to='logos', verbose_name='picture')),
-                ('stock', models.IntegerField(default=0, verbose_name='stock')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="name")),
+                (
+                    "description",
+                    models.TextField(max_length=300, verbose_name="description"),
+                ),
+                (
+                    "price",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=10, verbose_name="price"
+                    ),
+                ),
+                (
+                    "available",
+                    models.BooleanField(default=True, verbose_name="available"),
+                ),
+                (
+                    "photo",
+                    models.ImageField(
+                        blank=True, null=True, upload_to="logos", verbose_name="picture"
+                    ),
+                ),
+                ("stock", models.IntegerField(default=0, verbose_name="stock")),
             ],
         ),
     ]

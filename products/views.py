@@ -13,26 +13,29 @@ from rest_framework import status
 # Create your views here.
 class ProductListView(LoginRequiredMixin, generic.ListView):
     model = Product
-    template_name = 'products/list_product.html'
-    context_object_name = 'products'
+    template_name = "products/list_product.html"
+    context_object_name = "products"
+
 
 class ProductFormView(LoginRequiredMixin, generic.FormView):
     template_name = "products/add_product.html"
     form_class = ProductForm
-    success_url = reverse_lazy('add_product')
+    success_url = reverse_lazy("add_product")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({
-            'data': self.request.POST,
-            'files': self.request.FILES,
-        })
+        kwargs.update(
+            {
+                "data": self.request.POST,
+                "files": self.request.FILES,
+            }
+        )
         return kwargs
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-    
+
 
 class ProductListAPI(APIView):
     authentication_classes = []
@@ -47,7 +50,7 @@ class ProductListAPI(APIView):
 class ProductCreateAPI(APIView):
     authentication_classes = []
     permission_classes = []
-    
+
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():

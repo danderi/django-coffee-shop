@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from products.models import Product
 
+
 # Create your models here.
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -9,8 +10,9 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Order {self.id} by {self.user.username}'
-    
+        return f"Order {self.id} by {self.user.username}"
+
+
 # Modelo para productos en una orden
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -18,4 +20,4 @@ class OrderProduct(models.Model):
     quantity = models.IntegerField()
 
     def __str__(self):
-        return f'{self.quantity} x {self.product} in Order {self.order.id}'
+        return f"{self.quantity} x {self.product} in Order {self.order.id}"
